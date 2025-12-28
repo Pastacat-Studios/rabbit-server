@@ -11,6 +11,7 @@ func main() {
 	database.Connect()
 	router := gin.Default()
 	router.GET("/api/connect", gamehandler.PongGame)
+	router.GET("/api/maxscore", gamehandler.SendHighestScore)
 	router.POST("/api/submit", gamehandler.GetGameJson)
 	router.Run() // listens on 0.0.0.0:8080 by default
 }

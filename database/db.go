@@ -19,5 +19,5 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
-	DB.MustExec(schema)
+	//DB.MustExec(schema)
 }
