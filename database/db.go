@@ -10,7 +10,8 @@ var DB *sqlx.DB
 var schema = `
 CREATE TABLE scores (
     id text,
-    score INTGER NOT NULL
+    score INTGER NOT NULL,
+	created DATETIME NOT NULL DEFAULT(GETDATE())
 );`
 
 func Connect() {
@@ -19,5 +20,9 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
-	//DB.MustExec(schema)
+	ids := make([]string, 0)
+	err = DB.Select(&ids, "SELECT DISTINCT id FROM scores") //dummy querry
+	if err != nil {
+		DB.MustExec(schema)
+	}
 }

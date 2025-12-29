@@ -44,7 +44,7 @@ func SendHighestScore(c *gin.Context) {
 	score := tinyscore{}
 	err := database.DB.Get(&score, "SELECT MAX(score) FROM scores")
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(200, gin.H{"score": 0}) //Unimportant enough to silently fail
 		return
 	}
 	c.JSON(200, gin.H{
