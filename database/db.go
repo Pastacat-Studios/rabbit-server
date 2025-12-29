@@ -11,7 +11,7 @@ var schema = `
 CREATE TABLE scores (
     id text,
     score INTGER NOT NULL,
-	created DATETIME NOT NULL DEFAULT(GETDATE())
+	created DATETIME NOT NULL DEFAULT(datetime('now'))
 );`
 
 func Connect() {
