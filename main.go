@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"os"
 	"pastacat/rabbitserver/database"
 	"pastacat/rabbitserver/frontend"
 	"pastacat/rabbitserver/gamehandler"
@@ -10,7 +11,7 @@ import (
 )
 
 func main() {
-	database.Connect()
+	database.Connect(os.Getenv("DB_PATH"))
 	router := gin.Default()
 	api := router.Group("api")
 	{

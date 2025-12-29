@@ -14,9 +14,9 @@ CREATE TABLE scores (
 	created DATETIME NOT NULL DEFAULT(datetime('now'))
 );`
 
-func Connect() {
+func Connect(path string) {
 	var err error
-	DB, err = sqlx.Connect("sqlite3", "./test.db")
+	DB, err = sqlx.Connect("sqlite3", path)
 	if err != nil {
 		panic(err)
 	}
