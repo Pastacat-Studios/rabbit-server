@@ -2,9 +2,9 @@ package gamehandler
 
 import (
 	"pastacat/rabbitserver/database"
-	"regexp"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 const Version string = "0.1a"
@@ -16,7 +16,7 @@ type connection struct {
 
 func PongGame(c *gin.Context) {
 	var con connection
-	err := c.BindJSON(&con)
+	err := c.ShouldBindBodyWith(&con, binding.JSON)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -25,14 +25,9 @@ func PongGame(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "Incompatible Version"})
 		return
 	}
-	match, _ := regexp.MatchString(`^[a-zA-Z]+$`, con.Id)
-	if !match {
-		c.JSON(406, gin.H{"error": "Bad Username"})
-		return
-	}
 	c.JSON(200, gin.H{
 		"server":  "Rabbit Server",
-		"version": "0.1a",
+		"version": Version,
 	})
 }
 

@@ -4,6 +4,7 @@ import (
 	"pastacat/rabbitserver/database"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 type Score struct {
@@ -13,7 +14,7 @@ type Score struct {
 
 func GetGameJson(c *gin.Context) {
 	var newscore Score
-	err := c.BindJSON(&newscore)
+	err := c.ShouldBindBodyWith(&newscore, binding.JSON)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -24,6 +25,6 @@ func GetGameJson(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{
-		"message": "Your answers were very helpful...",
+		"message": "Submitted Successfully",
 	})
 }

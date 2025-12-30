@@ -16,7 +16,7 @@ func main() {
 	api := router.Group("api")
 	{
 		api.GET("/maxscore", gamehandler.SendHighestScore)
-		gameonly := api.Group("/", gamehandler.CheckIfGame)
+		gameonly := api.Group("/", gamehandler.CheckIfGame, gamehandler.CheckUsername)
 		{
 			gameonly.POST("/connect", gamehandler.PongGame)
 			gameonly.POST("/submit", gamehandler.GetGameJson)
