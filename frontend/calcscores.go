@@ -8,10 +8,6 @@ import (
 	"sort"
 )
 
-type id struct {
-	id string `db:"id"`
-}
-
 type Score struct {
 	Id    string `json:"id" db:"id"`
 	Score int    `json:"score" db:"MAX(score)"`
@@ -19,7 +15,7 @@ type Score struct {
 
 func CalcScores() []Score {
 	ids := make([]string, 0)
-	database.DB.Select(&ids, "SELECT DISTINCT id FROM scores")
+	database.DB.Select(&ids, "SELECT DISTINCT id FROM scores ORDER BY score DESC, created ASC")
 	scores := make([]Score, 0)
 	for _, v := range ids {
 		temp := make([]int, 0)
