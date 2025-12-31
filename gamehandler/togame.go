@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 )
 
-const Version string = "0.1a"
+const Version string = "2.0"
 
 type connection struct {
 	Ver string `json:"version"`
