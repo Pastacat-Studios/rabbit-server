@@ -13,6 +13,7 @@ import (
 func main() {
 	database.Connect(os.Getenv("DB_PATH"))
 	router := gin.Default()
+	router.Use(frontend.SendCors)
 	api := router.Group("api")
 	{
 		api.GET("/maxscore", gamehandler.SendHighestScore)
