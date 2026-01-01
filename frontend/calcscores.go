@@ -6,11 +6,17 @@ import (
 	"pastacat/rabbitserver/database"
 	"slices"
 	"sort"
+	"time"
 )
 
 type Score struct {
 	Id    string `json:"id" db:"id"`
 	Score int    `json:"score" db:"MAX(score)"`
+}
+
+type ScoreTimestamp struct {
+	Timestamp string `db:"created"`
+	Score     int    `db:"score"`
 }
 
 func CalcScores() []Score {
@@ -30,8 +36,24 @@ func GenScoreList() template.HTML {
 	scores := CalcScores()
 	result := ""
 	for _, v := range scores {
-		result = result + "<li>" + v.Id + ": " + fmt.Sprint(v.Score) + "</li>\n" //We already checked usernames in the connect function this is safe
+		result = result + "<li>" + v.Id + ": " + fmt.Sprint(v.Score) + "</li>\n" //We already checked usernames in the middleware this is safe
 	}
-	fmt.Println(result)
+	return template.HTML(result)
+}
+
+func CalcScoresUser(user string) []ScoreTimestamp {
+	scores := make([]ScoreTimestamp, 0)
+	database.DB.Select(&scores, "SELECT score, created FROM scores WHERE id = $1 ORDER BY created ASC", user)
+	//sort.Slice(scores, func(i, j int) bool { return scores[i].Score > scores[j].Score })
+	return scores
+}
+
+func GenScoreListUser(user string) template.HTML {
+	scores := CalcScoresUser(user)
+	result := ""
+	for _, v := range scores {
+		t, _ := time.Parse(time.RFC3339, v.Timestamp)
+		result = result + "<li>" + fmt.Sprint(v.Score) + " (" + fmt.Sprint(t.UTC().Format(time.UnixDate)) + ")" + "</li>\n" //We already checked usernames in the middleware this is safe
+	}
 	return template.HTML(result)
 }

@@ -25,8 +25,10 @@ func main() {
 	}
 	router.SetFuncMap(template.FuncMap{
 		"listofscores": frontend.GenScoreList,
+		"userscores":   frontend.GenScoreListUser,
 	})
 	router.LoadHTMLGlob("frontend/templates/*.tmpl")
 	router.GET("/leaderboard", frontend.GenLeaderboard)
+	router.GET("/user/:id", frontend.GenUser)
 	router.Run() // listens on 0.0.0.0:8080 by default
 }

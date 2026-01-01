@@ -1,0 +1,10 @@
+{{ define "user.tmpl" }}
+<html>
+  <h1>
+    {{ .user }}
+  </h1>
+  <ul>
+    {{ .user | userscores }}
+  </ul>
+</html>
+{{ end }}
