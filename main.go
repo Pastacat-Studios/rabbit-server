@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	database.Connect(os.Getenv("DB_PATH"))
 	router := gin.Default()
 	router.Use(frontend.SendCors)
@@ -32,5 +33,8 @@ func main() {
 	router.GET("/user/:id", frontend.GenUser)
 	router.Static("/assets", "./assets")
 	router.StaticFile("/favicon.ico", "./assets/favicon.ico")
+	router.GET("/", func(c *gin.Context) {
+		c.Redirect(302, "/leaderboard")
+	})
 	router.Run() // listens on 0.0.0.0:8080 by default
 }
