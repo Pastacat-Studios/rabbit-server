@@ -1,10 +1,46 @@
 {{ define "user.tmpl" }}
 <html>
-  <h1>
-    {{ .user }}
-  </h1>
-  <ul>
-    {{ .user | userscores }}
-  </ul>
+  <title>{{ .user }}'s Score History</title>
+  <style>
+    body {
+      background-image: url('/assets/leaderboard_background.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      overflow-y: hidden;
+  
+      #centered {
+        display: table;
+        margin: 0 auto;
+        position: relative;
+        text-align: center;
+      }
+    }
+  </style>
+  <div id=centered>
+  <img src="/assets/redbg_blank.png" alt="The leaderboard background">
+    <h1 style="
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -750%);
+    color: white;
+    font-size: 50px;
+  ">
+      {{ .user }}
+    </h1>
+    <ul style="
+    position: absolute;
+    text-align: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 30px;
+    width: 550px;
+  ">
+      {{ .user | userscores }}
+    </ul>
+  </div>
 </html>
 {{ end }}
