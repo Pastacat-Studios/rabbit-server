@@ -9,11 +9,16 @@
       background-size: 100% 100%;
       overflow-y: hidden;
   
+      #scrolltext {
+        overflow-y:scroll;
+        overflow:scroll;
+      }
+
       #centered {
         display: table;
         margin: 0 auto;
         position: relative;
-        text-align: center;
+        text-align: center;     
       }
     }
   </style>
@@ -29,18 +34,22 @@
   ">
       {{ .user }}
     </h1>
-    <ul style="
-    position: absolute;
-    text-align: left;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 30px;
-    width: 550px;
-  ">
-      {{ .user | userscores }}
-    </ul>
+    <div id=scrolltext>
+      <ul style="
+      position: absolute;
+      text-align: left;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 30px;
+      width: 550px;
+      height: 670px;
+      overflow:auto;
+    ">
+        {{ .user | userscores }}
+      </ul>
+    </div>
   </div>
 </html>
 {{ end }}
